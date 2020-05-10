@@ -25,6 +25,5 @@ def get_result_with_nums(query, nums=5):
 
 if __name__ == "__main__":
     text = """Lực lượng tìm kiếm Osama bin Laden không có chút manh mối về tung tích nhân vật này, cho dù các thông tin tình báo gần đây chứng tỏ thủ lĩnh Al-Qaeda còn sống. Tổng thống Pakistan Pervez Musharraf cho biết. 
-
     """
     print(get_result_with_nums(text, 3))
