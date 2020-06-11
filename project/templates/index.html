@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        body{
+            background-color: #6f6d72 !important;
+            font-family: arial;
+        }
+        container > div{
+            border-radius: 10px;
+        }
+        .row{
+            background-color: rgb(79, 78, 82);
+        }
+        img{
+            border-radius: 3px;
+        }
+        .title-1{
+            color: #DACB46;
+            font-size: 26px;
+        }
+        .title-2{
+            color: #BBBBBB;
+        }
+        .title-3, .form-search{
+            color: #BBBBBB;
+        }
+        .title-1, .title-2, .title-3{
+            margin: 3px 0px 3px 0px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container form-search style="background-color: #4F4E52;>
+        <form method="POST">
+            <div class="row mb-3 rounded mt-3 pt-3 pb-3">
+                <div class="col-md-3 d-flex flex-column group-control">
+                    <label for="">Tên phim(V)</label>
+                    <input type="text" class="form-control" name="name_vi" value="{{ arrayForm.name_vi }}">
+                </div>
+                <div class="col-md-3 d-flex flex-column group-control">
+                    <label for="">Tên phim(E)</label>
+                    <input type="text" class="form-control" name="name_en" value="{{ arrayForm.name_en }}">
+                </div>
+                <div class="col-md-3 d-flex flex-column group-control">
+                    <label for="">Đạo diễn</label>
+                    <input type="text" class="form-control" name="director" value="{{ arrayForm.director }}">
+                </div>
+                <div class="col-md-3 d-flex flex-column group-control">
+                    <label for="">Diễn viên</label>
+                    <input type="text" class="form-control" name="actor" value="{{ arrayForm.actor }}">
+                </div>
+                <div class="col-md-3 d-flex flex-column group-control">
+                    <label for="">Quốc gia</label>
+                    <input type="text" class="form-control" name="country" value="{{ arrayForm.country }}">
+                </div>
+                <div class="col-md-3 d-flex flex-column group-control">
+                    <label for="">Thể loại</label>
+                    <input type="text" class="form-control" name="kind" value="{{ arrayForm.kind }}">
+                </div>
+                <div class="col-md-1 d-flex flex-column group-control">
+                    <label for="">Năm</label>
+                    <input type="text" class="form-control" name="year" value="{{ arrayForm.year }}">
+                </div>
+                <div class="col-md-2 d-flex flex-column group-control">
+                    <label for="">AND/OR</label>
+                    <select name="flag" id="" class="form-control">
+                        <option value="1" {% if arrayForm.flag == 1 %} selected {% endif %}>And</option>
+                        <option value="2" {% if arrayForm.flag == 2 %} selected {% endif %}>Or</option>
+                    </select>
+                </div>
+                <div class="col-md-1 d-flex align-items-end">
+                    <button type="submit" class="btn btn-success">Tìm kiếm</button>
+                </div>
+                <div class="col-md-1 d-flex ml-2 align-items-end">
+                    <a class="btn btn-outline-primary" onclick="resetInput()">Reset</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="container" id="alert" style="background-color:#4F4E52; border-radius: 20px">
+        {% if number == 0 %}
+            <div class="row ">
+                <div class="col-12 text-center title-1  ">
+                    <span class="text-primary" id="omg">Không tìm thấy kết quả phù hợp</span>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div class="container" id="result" style="background-color: #4F4E52; border-radius: 10px">
+        {% for item in results %}
+            <div class="row text-center mb-3 rounded mt-3 pt-3 pb-3">
+                <div class="col-md-4 d-flex flex-column">
+                    <div>
+                        <img width="100%" height="400" src="{{ item['url_image'][0] }}" alt="">
+                    </div>
+                    <div class="mt-2">
+                        <a href="{{ 'https://' + item['url'][0] }}" target="_blank" class="btn btn-danger">Xem phim</a>
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex flex-column text-left">
+                    {% if item["name_vi"] %}
+                    <span class="title-1">
+                        {{ item["name_vi"][0] }}
+                    </span>
+                    {% endif %}
+                    {% if item["name_en"] %}
+                    <span class="title-1">
+                        {{ item["name_en"][0] }}
+                    </span>
+                    {% endif %}
+                    {% if item["status"] %}
+                    <span class="title-1">
+                        Trạng thái: {{ item["status"][0] }}
+                    </span>
+                    {% endif %}
+                    {% if item["director"] %}
+                    <span class="title-3">
+                        Đạo diễn: {{ item["director"][0] }}
+                    </span>
+                    {% endif %}
+                    {% if item["country"] %}
+                    <span class="title-1">
+                        Quốc gia: {{ item["country"][0] }}
+                    </span>
+                    {% endif %}
+                    {% if item["year"] %}
+                    <span class="title-3">
+                        Năm: 
+                        {{ item["year"][0] }}
+                    </span>
+                    {% endif %}
+                    {% if item["kind"] %}
+                    <span class="title-3">
+                        Thể loại: 
+                        {{ item["kind"][0] }}
+                    </span>
+                    {% endif %}
+                    {% if item["actors"] %}
+                    <span class="title-3">
+                        Diễn viên: 
+                        {{ item["actors"][0] }}
+                    </span>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+<script>
+    function resetInput(){
+        let allInputE = document.getElementsByClassName('form-control');
+        let result = document.getElementById('result');
+        for(let i = 0; i < allInputE.length; i++){
+            allInputE[i].value = '';
+        }
+        document.getElementById('alert').value = '';
+        document.getElementById('result').innerHTML = '';
+    }
+</script>
+</body>
+</html>
