@@ -59,8 +59,8 @@ class Candidate():
         	("q", query)
         ]
         print(query)
-        print("http://localhost:8983/solr/demo/select?" + urllib.parse.urlencode(solr_tuples))
-        conn = urlopen("http://localhost:8983/solr/demo/select?" + urllib.parse.urlencode(solr_tuples))
+        print("http://localhost:8983/solr/release/select?" + urllib.parse.urlencode(solr_tuples))
+        conn = urlopen("http://localhost:8983/solr/release/select?" + urllib.parse.urlencode(solr_tuples))
         rsp = eval(conn.read())
         flag = True
         results = []
