@@ -1,13 +1,15 @@
 import urllib
 from urllib.request import urlopen
 from urllib.parse import *
+from util import classify  
+from singleton import Singleton
 
 
+@Singleton
 class Candidate():
     def __init__(self):
         self.arrayForm = {}
-        self.arrayForm["name_vi"] = ""
-        self.arrayForm["name_en"] = ""
+        self.arrayForm["name"] = ""
         self.arrayForm["director"] = ""
         self.arrayForm["actor"] = ""
         self.arrayForm["year"] = ""
@@ -17,8 +19,7 @@ class Candidate():
 
     def search(self, form):
         query = ""
-        self.arrayForm["name_vi"] = form["name_vi"]
-        self.arrayForm["name_en"] = form["name_en"]
+        self.arrayForm["name"] = form["name"]
         self.arrayForm["director"] = form["director"]
         self.arrayForm["actor"] = form["actor"]
         self.arrayForm["year"] = form["year"]
@@ -29,12 +30,11 @@ class Candidate():
             c = " && "
         elif self.arrayForm["flag"] == "2":
             c = " & "
-        if self.arrayForm["name_vi"]:
-            query += "name_vi:" + '\"' + self.arrayForm["name_vi"] + '\"'
-        if self.arrayForm["name_en"]:
-            if query != "":
-                query += c
-            query += "name_en:" + '\"' + self.arrayForm["name_en"] + '\"'
+        category = classify(self.arrayForm["name"], 2)
+        if category:
+            query += "name_vi:" + '\"' + self.arrayForm["name"] + '\"'
+        else:
+            query += "name_en:" + '\"' + self.arrayForm["name"] + '\"'
         if self.arrayForm["director"]:
             if query != "":
                 query += c

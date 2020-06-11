@@ -39,12 +39,8 @@
         <form method="POST">
             <div class="row mb-3 rounded mt-3 pt-3 pb-3">
                 <div class="col-md-3 d-flex flex-column group-control">
-                    <label for="">Tên phim(V)</label>
-                    <input type="text" class="form-control" name="name_vi" value="{{ arrayForm.name_vi }}">
-                </div>
-                <div class="col-md-3 d-flex flex-column group-control">
-                    <label for="">Tên phim(E)</label>
-                    <input type="text" class="form-control" name="name_en" value="{{ arrayForm.name_en }}">
+                    <label for="">Tên phim</label>
+                    <input type="text" class="form-control" name="name" value="{{ arrayForm.name }}">
                 </div>
                 <div class="col-md-3 d-flex flex-column group-control">
                     <label for="">Đạo diễn</label>
@@ -114,7 +110,7 @@
                     </span>
                     {% endif %}
                     {% if item["status"] %}
-                    <span class="title-1">
+                    <span class="title-3">
                         Trạng thái: {{ item["status"][0] }}
                     </span>
                     {% endif %}
@@ -124,7 +120,7 @@
                     </span>
                     {% endif %}
                     {% if item["country"] %}
-                    <span class="title-1">
+                    <span class="title-3">
                         Quốc gia: {{ item["country"][0] }}
                     </span>
                     {% endif %}

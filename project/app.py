@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route('/results', methods=["GET", 'POST'])
 def index():
     number = 1
-    candidate = Candidate()
+    candidate = Candidate.Instance()
     if request.method == "GET":
         return render_template("index.html", arrayForm=candidate.arrayForm, number=number)
     else:
